@@ -8,6 +8,8 @@ app.use('/user', userRoute);
 
 
 // Démarrage du serveur
-app.listen(8080, () => {
-    console.log('Server running on port 8080');
+app.listen(443, () => {
+    console.log('Server running on port 443');
 });
+
+//ajouter la licence, app.get...
