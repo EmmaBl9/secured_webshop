@@ -1,1 +1,8 @@
-openssl genpkey -algorithm RSA -out privkey.key
+générer une clé privée :
+- openssl genpkey -algorithm RSA -out privkey.key
+
+créer une demande de signature de certificat (CSR) :
+- openssl req -new -key privkey.key -out request.csr
+
+signer cette demande pour produire un certificat auto-signé :
+- openssl x509 -req -in request.csr -signkey privkey.key -out certificate.crt -days 365
