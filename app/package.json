@@ -8,7 +8,9 @@
   },
   "dependencies": {
     "express": "^4.19.1",
+    "mysql": "^2.18.1",
     "mysql2": "^3.9.4",
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.0",
+    "sql": "^0.78.0"
   }
 }
