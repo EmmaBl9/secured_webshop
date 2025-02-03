@@ -3,9 +3,20 @@ const fs = require("fs");
 const https = require("https");
 const app = express();
 
+//appel un middleware pour analyser les données d'un formulaire envoyé
+app.use(express.urlencoded({ extended: true }));
+
 //Route pour user
 const userRoute = require("./routes/User");
 app.use("/user", userRoute);
+
+//Route pour le login
+const loginRoute = require("./routes/Login");
+app.use("/login", loginRoute);
+
+//Route pour le register
+const registerRoute = require("./routes/Register");
+app.use("/register", registerRoute);
 
 // Ajouter la licence
 // Charger les clés SSL

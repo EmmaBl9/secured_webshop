@@ -64,12 +64,11 @@
   <body>
     <div class="container">
       <h1>Inscription</h1>
-      <form action="/register" method="POST">
-        <input type="text" name="name" placeholder="Nom complet" required />
+      <form action="/register/createUser" method="POST">
         <input
-          type="email"
-          name="email"
-          placeholder="Adresse e-mail"
+          type="text"
+          name="username"
+          placeholder="Nom d'utilisateur"
           required
         />
         <input
@@ -78,12 +77,12 @@
           placeholder="Mot de passe"
           required
         />
-        <input
+        <!-- <input
           type="password"
           name="confirm_password"
           placeholder="Confirmez le mot de passe"
           required
-        />
+        />-->
         <button type="submit">S'inscrire</button>
       </form>
       <p>Déjà un compte ? <a href="login">Connectez-vous</a></p>
