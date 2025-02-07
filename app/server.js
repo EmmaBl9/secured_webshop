@@ -20,8 +20,8 @@ app.use("/register", registerRoute);
 
 // Ajouter la licence
 // Charger les clés SSL
-const privateKey = fs.readFileSync("privkey.key", "utf8");
-const certificate = fs.readFileSync("certificate.crt", "utf8");
+const privateKey = fs.readFileSync("./certificates/privkey.key", "utf8");
+const certificate = fs.readFileSync("./certificates/certificate.crt", "utf8");
 const credentials = { key: privateKey, cert: certificate };
 
 // Créer le serveur HTTPS
