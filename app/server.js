@@ -1,7 +1,11 @@
 const express = require("express");
 const fs = require("fs");
 const https = require("https");
+const dotenv = require("dotenv");
 const app = express();
+
+app.set("view engine", "ejs");
+app.set("views", "./view");
 
 //appel un middleware pour analyser les données d'un formulaire envoyé
 app.use(express.urlencoded({ extended: true }));
@@ -18,6 +22,11 @@ app.use("/login", loginRoute);
 const registerRoute = require("./routes/Register");
 app.use("/register", registerRoute);
 
+// Route erreur 404
+app.use((req, res, next) => {
+  res.status(404).send("Page not found");
+});
+
 // Ajouter la licence
 // Charger les clés SSL
 const privateKey = fs.readFileSync("privkey.key", "utf8");
@@ -29,5 +38,6 @@ const httpsServer = https.createServer(credentials, app);
 
 // Démarrage du serveur
 httpsServer.listen(443, () => {
+  dotenv.config();
   console.log("Server running on port https://localhost:443/user");
 });

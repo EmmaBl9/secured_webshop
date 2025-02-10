@@ -1,29 +1,35 @@
 require("dotenv").config();
-const sql = require("mysql2");
-const db = sql.createConnection(
-  {
-    host: process.env.DATABASE_HOST,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE,
-    port: process.env.DB_PORT,
-  }, //Si il y a une erreur
-  (err, result) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-  }
-);
+const sql = require("mysql2/promise");
+const settings = {
+  host: process.env.DATABASE_HOST,
+  user: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE,
+  port: process.env.DB_PORT,
+};
+
+const db = sql.createPool(settings);
+
+const createConnection = () =>
+  db
+    .getConnection()
+    .then((connection) => {
+      console.log("Database connected");
+      return connection; // Retourne la connexion pour utilisation ultérieure
+    })
+    .catch((err) => {
+      console.error("Error connecting to DB:", err);
+      throw err; // Relance l'erreur pour gestion externe
+    });
 
 ///////       TOUTE LES REQUÊTES SERONT EXÉCUTÉE ICI        \\\\\\\\
 
-const createUser = function (username, password) {
+const createUser = async function (username, password) {
   // Fonction pour créer l'utilisateur
-  db.promise().query(
-    "INSERT INTO t_users (useName, usePassword) VALUES (?, ?)",
-    [username, password]
-  );
+  db.query("INSERT INTO t_users (username, hashedPassword) VALUES (?, ?)", [
+    username,
+    password,
+  ]);
 };
 
 //Ajouter un auto increment
@@ -54,4 +60,4 @@ const getUser = async (name) => {
   }
 };*/
 
-module.exports = { createUser };
+module.exports = { db, createUser };
