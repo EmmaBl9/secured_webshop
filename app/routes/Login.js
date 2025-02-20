@@ -8,25 +8,28 @@ router.get("/", (req, res) => {
 });
 
 router.post("/auth", async function (req, res) {
-  const { username, password } = req.body;
-
-  if (!LoginController.verifyLogin(username, password)) {
-    return res.status(401).send("Erreur dans les informations de connection");
-  }
-
   try {
-    const token = await LoginController.createSession(username, password);
+    const { username, password } = req.body;
 
-    // Ajouter le cookie et rediriger vers la page de compte
+    // Vérifier si l'utilisateur est valide
+    const isValidUser = await LoginController.verifyLogin(username, password);
+    if (!isValidUser) {
+      return res.status(401).send("Erreur dans les informations de connexion");
+    }
+
+    // Création du token
+    const token = await LoginController.createSession(req, res);
+
+    // Stocker le token dans un cookie sécurisé et rediriger vers /account
     res
-      // Stocke le token dans un cookie sécurisé
-      .cookie("Authorization", token, { httpOnly: true })
-      // Stocker le nom d'utilisateur
+      // Sécurisé
+      .cookie("Authorization", token, { httpOnly: true, secure: true })
+      // Stocker l'username
       .cookie("username", username, { httpOnly: true })
-      // Redirige vers la page de compte
+      // Rediriger l'utilisateur
       .redirect("/account");
   } catch (err) {
-    console.log("Erreur lors de la création du token de connection : " + err);
+    console.error("Erreur lors de la connexion :", err);
     return res
       .status(500)
       .send("Erreur serveur, veuillez réessayer plus tard.");

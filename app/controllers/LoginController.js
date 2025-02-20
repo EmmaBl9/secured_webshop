@@ -38,13 +38,21 @@ const verifyLogin = async (username, password) => {
 
 const createSession = (req, res) => {
   return new Promise(async (resolve, reject) => {
+    if (!req.body) {
+      return reject(new Error("Aucune donnée reçue dans la requête"));
+    }
+
     const { username, password } = req.body;
+    if (!username || !password) {
+      return reject(new Error("Nom d'utilisateur ou mot de passe manquant"));
+    }
+
     try {
       const token = await jwt.createToken({ username });
       if (token) {
         resolve(token);
       } else {
-        reject();
+        reject(new Error("Impossible de générer un token"));
       }
     } catch (err) {
       reject(err);
@@ -52,4 +60,4 @@ const createSession = (req, res) => {
   });
 };
 
-module.exports = { createSession, verifyLogin };
+module.exports = { verifyLogin, createSession };
