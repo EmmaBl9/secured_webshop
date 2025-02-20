@@ -22,6 +22,10 @@ app.use("/login", loginRoute);
 const registerRoute = require("./routes/Register");
 app.use("/register", registerRoute);
 
+//Route pour le compte
+const accountRoute = require("./routes/account");
+app.use("/account", accountRoute);
+
 // Route erreur 404
 app.use((req, res, next) => {
   res.status(404).send("Page not found");

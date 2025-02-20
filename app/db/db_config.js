@@ -25,12 +25,20 @@ const createConnection = () =>
 
 ///////       TOUTE LES REQUÊTES SERONT EXÉCUTÉE ICI        \\\\\\\\
 
-const createUser = async function (username, password) {
-  // Fonction pour créer l'utilisateur
-  db.query("INSERT INTO t_users (username, hashedPassword) VALUES (?, ?)", [
-    username,
-    password,
-  ]);
+//Création d'un utilisateur
+const createUser = async function (username, hashedPassword) {
+  try {
+    const [result] = await db.query(
+      "INSERT INTO t_users (username, hashedPassword) VALUES (?, ?)",
+      [username, hashedPassword]
+    );
+    return result;
+  } catch (error) {
+    console.error(
+      "Erreur lors de l'insertion dans la base de données :",
+      error
+    );
+  }
 };
 
 //Ajouter un auto increment
