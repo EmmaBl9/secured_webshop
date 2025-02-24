@@ -60,4 +60,26 @@ const createSession = (req, res) => {
   });
 };
 
-module.exports = { verifyLogin, createSession };
+// Vérification du token
+const verifySession = (token) => {
+  return new Promise(async (resolve, reject) => {
+    if (!token) {
+      reject("No token");
+      return;
+    }
+    try {
+      const decoded = await jwt.verifyToken(token);
+      try {
+        const userData = await db.db.query(
+          "SELECT id, username FROM t_users WHERE id = ?",
+          [decoded.sub]
+        );
+        resolve(userData);
+      } catch (err) {}
+    } catch (err) {
+      reject("Token Invalide");
+    }
+  });
+};
+
+module.exports = { verifyLogin, createSession, verifySession };
