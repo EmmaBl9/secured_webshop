@@ -10,7 +10,7 @@ router.get("/", (req, res) => {
 
 // Route pour la déconnexion
 router.get("/logout", (req, res) => {
-  res.clearCookie("Authorization").redirect("/login");
+  res.clearCookie("Authorization").clearCookie("username").redirect("/login");
 });
 
 module.exports = router;

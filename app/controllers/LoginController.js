@@ -20,7 +20,7 @@ const verifyLogin = async (username, password) => {
     const user = rows[0];
     console.log("Données de l'utilisateur :", user);
 
-    // Comparaison du mot de passe entré par l'utilisateur avec le mot de passe hashé en base de données
+    // Comparaison du mot de passe entré par l'utilisateur avec le mot de passe haché en base de données
     const correct = await bcrypt.compare(password, user.hashedPassword);
 
     if (correct) {

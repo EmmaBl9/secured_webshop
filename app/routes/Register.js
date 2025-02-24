@@ -14,6 +14,13 @@ router.post("/createUser", async function (req, res) {
     return res.status(400).json({ error: "Tous les champs sont requis" });
   }
 
+  //Ajouter des conditions pour la création des mots de passe
+  if (password.length < 8) {
+    return res
+      .status(400)
+      .json({ error: "Le mot de passe doit contenir au minimum 8 caractères" });
+  }
+
   // Vérifier si les mots de passe correspondent
   if (password !== confirm_password) {
     return res

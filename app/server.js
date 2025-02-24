@@ -3,16 +3,20 @@ const app = express();
 const fs = require("fs");
 const https = require("https");
 const dotenv = require("dotenv");
-//const cookieParser = require("cookie-parser");
+const cookieParser = require("cookie-parser");
+const path = require("path");
 
 app.set("view engine", "ejs");
 app.set("views", "./view");
 
 // Permet de lire les cookies
-//app.use(cookieParser());
+app.use(cookieParser());
 
 //appel un middleware pour analyser les données d'un formulaire envoyé
 app.use(express.urlencoded({ extended: true }));
+
+//pour avoir accès au css
+app.use("/public", express.static(path.join(__dirname, "./public")));
 
 //Route pour le register
 const registerRoute = require("./routes/Register");
@@ -43,5 +47,5 @@ const httpsServer = https.createServer(credentials, app);
 // Démarrage du serveur
 httpsServer.listen(443, () => {
   dotenv.config();
-  console.log("Server running on port https://localhost:443/home");
+  console.log("Server running on port https://localhost:443/login");
 });

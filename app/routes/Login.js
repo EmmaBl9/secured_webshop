@@ -10,7 +10,7 @@ router.get("/", (req, res) => {
 router.post("/auth", async function (req, res) {
   try {
     const { username, password } = req.body;
-
+    console.log(username, password);
     // Vérifier si l'utilisateur est valide
     const isValidUser = await LoginController.verifyLogin(username, password);
     if (!isValidUser) {
