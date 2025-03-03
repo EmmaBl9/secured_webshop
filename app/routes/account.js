@@ -1,11 +1,25 @@
 const express = require("express");
 const router = express.Router();
+const LoginController = require("../controllers/LoginController");
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   // Vérifier si le nom d'utilisateur est stocké dans un cookie ou une requête
   const username = req.cookies.username;
-  // Rendre la vue EJS avec le nom de l'utilisateur
-  res.render("account", { username });
+
+  const token = req.cookies.Authorization;
+  if (!token) {
+    return res.redirect("/login");
+  }
+
+  try {
+    const { isAdmin } = await LoginController.verifySession(token);
+
+    // Rendre la vue EJS avec le nom de l'utilisateur
+    return res.render("account", { username, isAdmin });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).redirect("/login");
+  }
 });
 
 // Route pour la déconnexion

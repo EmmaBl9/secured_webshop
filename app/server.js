@@ -30,6 +30,10 @@ app.use("/login", loginRoute);
 const accountRoute = require("./routes/Account");
 app.use("/account", accountRoute);
 
+//Route admin
+const adminRoute = require("./routes/admin");
+app.use("/admin", adminRoute);
+
 // Route erreur 404
 app.use((req, res, next) => {
   res.status(404).send("Page not found");

@@ -48,7 +48,12 @@ const createSession = (req, res) => {
     }
 
     try {
-      const token = await jwt.createToken({ username });
+      const [rows] = await db.db.query(
+        "SELECT id FROM t_users WHERE username = ?",
+        [username]
+      );
+
+      const token = await jwt.createToken({ sub: rows[0].id, username });
       if (token) {
         resolve(token);
       } else {
@@ -70,11 +75,11 @@ const verifySession = (token) => {
     try {
       const decoded = await jwt.verifyToken(token);
       try {
-        const userData = await db.db.query(
-          "SELECT id, username FROM t_users WHERE id = ?",
+        const [userData] = await db.db.query(
+          "SELECT id, username, isAdmin FROM t_users WHERE id = ?",
           [decoded.sub]
         );
-        resolve(userData);
+        return resolve(userData[0]);
       } catch (err) {}
     } catch (err) {
       reject("Token Invalide");

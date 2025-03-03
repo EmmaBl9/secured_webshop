@@ -30,6 +30,11 @@
   <body>
     <h1>Bonjour, <%= username %> !</h1>
     <p>Bienvenue sur votre page de compte.</p>
+
+    <% if (isAdmin == 1) { %>
+    <a href="/admin" class="admin-btn">Liste des utilisateurs</a>
+    <% } %>
+
     <a href="/account/logout">Se déconnecter</a>
   </body>
 </html>
