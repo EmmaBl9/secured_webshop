@@ -4,6 +4,8 @@ const bcrypt = require("bcrypt");
 const router = express.Router();
 const controller = require("../controllers/RegisterController");
 
+const { verifyEntry, forbiddenChars } = require("../helpers/secureEntry");
+
 router.get("/", controller.get);
 
 router.post("/createUser", async function (req, res) {
@@ -13,6 +15,9 @@ router.post("/createUser", async function (req, res) {
   if (!username || !password || !confirm_password) {
     return res.status(400).json({ error: "Tous les champs sont requis" });
   }
+
+  await verifyEntry(username, res);
+  await verifyEntry(password, res);
 
   //Ajouter des conditions pour la création des mots de passe
   if (password.length < 8) {

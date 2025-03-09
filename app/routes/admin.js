@@ -4,6 +4,7 @@ const LoginController = require("../controllers/LoginController");
 const path = require("path");
 const db = require("../db/db_config");
 const { Console } = require("console");
+const { verifyEntry } = require("../helpers/secureEntry");
 
 router.get("/", async (req, res) => {
   // Vérification si token valide
@@ -26,6 +27,7 @@ router.get("/", async (req, res) => {
     if (!req.query.search) {
       req.query.search = "";
     }
+    await verifyEntry(req.query.search, res);
 
     const [users] = await db.db.query(
       "SELECT id, username FROM t_users WHERE username LIKE ?",

@@ -2,6 +2,10 @@ const db = require("../db/db_config");
 
 const getUserData = async (userId) => {
   try {
+    if (!Number(userId)) {
+      return false;
+    }
+
     const [userData] = await db.db.query("SELECT * FROM t_users WHERE id = ?", [
       userId,
     ]);

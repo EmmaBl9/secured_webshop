@@ -1,9 +1,21 @@
 const jwt = require("../helpers/jwt");
 const db = require("../db/db_config.js");
 const bcrypt = require("bcrypt");
+const { verifyEntry } = require("../helpers/secureEntry.js");
 
 // Fonction qui vérifie si les informations de connexion correspondent à celles de la base de données
 const verifyLogin = async (username, password) => {
+  if (!username || !password) {
+    console.error("Nom d'utilisateur ou mot de passe manquant");
+    return false;
+  }
+
+  // Vérifier les entrées afin d'éviter les injections SQL
+  if (!(verifyEntry(username) || verifyEntry(password))) {
+    console.error("Entrée invalide détectée");
+    return false;
+  }
+
   try {
     // Requête qui récupère les informations de l'utilisateur depuis la base de données revoie un tableau à deux colonnes
     const [rows] = await db.db.query(
@@ -47,6 +59,12 @@ const createSession = (req, res) => {
       return reject(new Error("Nom d'utilisateur ou mot de passe manquant"));
     }
 
+    // Vérifier les entrées afin d'éviter les injections SQL
+    if (!(verifyEntry(username) || verifyEntry(password))) {
+      console.error("Entrée invalide détectée");
+      return false;
+    }
+
     try {
       const [rows] = await db.db.query(
         "SELECT id FROM t_users WHERE username = ?",
@@ -72,12 +90,19 @@ const verifySession = (token) => {
       reject("No token");
       return;
     }
+
+    // Vérifier les entrées afin d'éviter les injections SQL
+    if (!verifyEntry(token)) {
+      console.error("Entrée invalide détectée");
+      return false;
+    }
+
     try {
       const decoded = await jwt.verifyToken(token);
       try {
         const [userData] = await db.db.query(
           "SELECT id, username, isAdmin FROM t_users WHERE id = ?",
-          [decoded.sub]
+          [Number(decoded.sub)]
         );
         return resolve(userData[0]);
       } catch (err) {}
