@@ -9,7 +9,6 @@ const forbiddenChars = [
   "/",
   "%",
   "'",
-  '"',
   "\\",
   "|",
   "^",
@@ -19,7 +18,6 @@ const forbiddenChars = [
   ":",
   "@",
   "#",
-  "$",
   "`",
   "~",
   "OR",
@@ -38,8 +36,9 @@ const forbiddenChars = [
 ];
 
 const verifyEntry = (entry, res = null) => {
-  // Vérifier les entrées afin d'éviter les injections SQL
-  const invalidChars = forbiddenChars.filter((char) => entry.includes(char));
+  const invalidChars = forbiddenChars.filter((char) =>
+    entry.toUpperCase().includes(char.toUpperCase())
+  );
 
   if (invalidChars.length > 0) {
     console.error("Entrée invalide détectée :", invalidChars.join(", "));
@@ -55,6 +54,7 @@ const verifyEntry = (entry, res = null) => {
       )}`;
     }
   }
+  return null;
 };
 
 export { verifyEntry, forbiddenChars };

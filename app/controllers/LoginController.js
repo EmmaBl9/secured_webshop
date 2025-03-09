@@ -11,7 +11,7 @@ const verifyLogin = async (username, password) => {
   }
 
   // Vérifier les entrées afin d'éviter les injections SQL
-  if (!(verifyEntry(username) || verifyEntry(password))) {
+  if (verifyEntry(username) || verifyEntry(password)) {
     console.error("Entrée invalide détectée");
     return false;
   }
@@ -60,9 +60,10 @@ const createSession = (req, res) => {
     }
 
     // Vérifier les entrées afin d'éviter les injections SQL
-    if (!(verifyEntry(username) || verifyEntry(password))) {
+    let errorValidation;
+    if ((errorValidation = verifyEntry(username) || verifyEntry(password))) {
       console.error("Entrée invalide détectée");
-      return false;
+      return reject(new Error(errorValidation));
     }
 
     try {
@@ -92,9 +93,9 @@ const verifySession = (token) => {
     }
 
     // Vérifier les entrées afin d'éviter les injections SQL
-    if (!verifyEntry(token)) {
+    if (verifyEntry(token)) {
       console.error("Entrée invalide détectée");
-      return false;
+      return reject("Token Invalide");
     }
 
     try {
