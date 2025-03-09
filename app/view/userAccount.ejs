@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Compte Utilisateur</title>
+    <link rel="stylesheet" href="/public/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Informations de l'utilisateur</h1>
+      <table class="user-table" aria-label="Informations utilisateur">
+        <thead>
+          <tr>
+            <th scope="col">Champ</th>
+            <th scope="col">Valeur</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (const [key, value] of Object.entries(user)) { %>
+          <tr>
+            <td><strong><%= key %></strong></td>
+            <td>
+              <%= typeof value === 'object' ? JSON.stringify(value) : value %>
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+      <!-- bouton qui revient sur la dernière page -->
+      <button onclick="window.history.back()" class="back-button">
+        Retour à la page précédente
+      </button>
+      <p class="table-footer">
+        Dernière mise à jour: <%= new Date().toLocaleString('fr-FR') %>
+      </p>
+    </div>
+  </body>
+</html>

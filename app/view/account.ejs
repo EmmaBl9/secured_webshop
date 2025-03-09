@@ -4,37 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Compte</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        text-align: center;
-        margin-top: 50px;
-      }
-      h1 {
-        color: #4caf50;
-      }
-      a {
-        display: inline-block;
-        margin-top: 20px;
-        padding: 10px 20px;
-        background-color: red;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-      }
-      a:hover {
-        background-color: darkred;
-      }
-    </style>
+    <link rel="stylesheet" href="/public/styles.css" />
   </head>
   <body>
-    <h1>Bonjour, <%= username %> !</h1>
-    <p>Bienvenue sur votre page de compte.</p>
+    <div class="container">
+      <h1>Bonjour, <%= username %> !</h1>
+      <p>Bienvenue sur votre page de compte.</p>
 
-    <% if (isAdmin == 1) { %>
-    <a href="/admin" class="admin-btn">Liste des utilisateurs</a>
-    <% } %>
+      <% if (isAdmin == 1) { %>
+      <a href="/admin" class="button admin-btn">Liste des utilisateurs</a>
+      <% } %>
 
-    <a href="/account/logout">Se déconnecter</a>
+      <a href="/account/logout" class="button logout-btn">Se déconnecter</a>
+    </div>
   </body>
 </html>

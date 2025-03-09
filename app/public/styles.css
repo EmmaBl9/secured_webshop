@@ -1,55 +1,219 @@
+:root {
+  --fuchsia: #ed28ed;
+  --fuchsia-dark: #c013c0;
+  --fuchsia-light: #ff6aff;
+  --dark: #1a1a1a;
+  --dark-light: #333333;
+  --light: #f8f8f8;
+  --grey: #e0e0e0;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
 body {
-  font-family: Arial, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  margin: 0;
-  background-color: #f5f5f5;
+  min-height: 100vh;
+  background-color: var(--dark);
+  color: var(--light);
+  padding: 20px;
 }
+
 .container {
-  background: #ffffff;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: var(--dark-light);
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
   width: 100%;
-  max-width: 400px;
+  max-width: 650px;
+  border: 1px solid rgba(237, 40, 237, 0.3);
 }
-h1 {
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
+
+h1,
+h2 {
+  margin-bottom: 1.5rem;
+  font-weight: 600;
   text-align: center;
+  color: var(--fuchsia);
+  position: relative;
 }
+
+h1::after,
+h2::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 3px;
+  background: var(--fuchsia);
+  margin: 10px auto 0;
+}
+
+/* Form Styles */
+form {
+  width: 100%;
+}
+
 input {
   width: 100%;
-  padding: 0.75rem;
-  margin: 0.5rem 0;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 2px solid rgba(237, 40, 237, 0.2);
+  border-radius: 6px;
   font-size: 1rem;
-  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--light);
+  transition: all 0.3s;
 }
-button {
+
+input:focus {
+  outline: none;
+  border-color: var(--fuchsia);
+  box-shadow: 0 0 0 2px rgba(237, 40, 237, 0.3);
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+button,
+.button {
   width: 100%;
-  padding: 0.75rem;
-  background-color: #ed28ed;
+  padding: 1rem;
+  background-color: var(--fuchsia);
   border: none;
   color: white;
   font-size: 1rem;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: background-color 0.3s, transform 0.2s;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  margin-top: 0.5rem;
 }
-button:hover {
-  background-color: #ed28ed;
+
+button:hover,
+.button:hover {
+  background-color: var(--fuchsia-dark);
+  transform: translateY(-2px);
 }
+
+/* Links */
 p {
   text-align: center;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
+  color: rgba(255, 255, 255, 0.8);
 }
+
 a {
-  color: #ed28ed;
+  color: var(--fuchsia-light);
   text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
 }
+
 a:hover {
+  color: var(--fuchsia);
   text-decoration: underline;
+}
+
+/* Table Styles */
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-table thead {
+  background-color: var(--fuchsia);
+  color: white;
+}
+
+.user-table th,
+.user-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(237, 40, 237, 0.2);
+}
+
+.user-table tbody tr {
+  background-color: rgba(255, 255, 255, 0.05);
+  transition: background-color 0.3s;
+}
+
+.user-table tbody tr:hover {
+  background-color: rgba(237, 40, 237, 0.1);
+}
+
+/* Clickable row styles */
+.clickable-row {
+  cursor: pointer;
+}
+
+.table-footer {
+  text-align: right;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 0.75rem;
+}
+
+/* Admin specific styles */
+#searchInput {
+  margin-bottom: 1.5rem;
+  padding-left: 2.5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ed28ed' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 0.75rem center;
+}
+
+/* Account page */
+.admin-btn {
+  background-color: var(--dark-light);
+  color: var(--fuchsia-light);
+  border: 1px solid var(--fuchsia);
+  margin-right: 0.5rem;
+}
+
+.admin-btn:hover {
+  background-color: var(--fuchsia);
+  color: white;
+}
+
+.logout-btn {
+  background-color: rgba(255, 0, 0, 0.7);
+}
+
+.logout-btn:hover {
+  background-color: rgba(255, 0, 0, 0.9);
+}
+
+/* Responsive design */
+@media (max-width: 700px) {
+  .container {
+    padding: 1.5rem;
+  }
+
+  input,
+  button {
+    padding: 0.75rem;
+  }
+
+  .user-table th,
+  .user-table td {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.9rem;
+  }
 }
