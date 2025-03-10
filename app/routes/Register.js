@@ -16,8 +16,16 @@ router.post("/createUser", async function (req, res) {
     return res.status(400).json({ error: "Tous les champs sont requis" });
   }
 
-  await verifyEntry(username, res);
-  await verifyEntry(password, res);
+  let error = await verifyEntry(username, res);
+  if (error) {
+    return;
+  }
+  error += await verifyEntry(password, res);
+  if (error) {
+    return;
+  }
+
+  
 
   //Ajouter des conditions pour la création des mots de passe
   if (password.length < 8) {
@@ -46,7 +54,7 @@ router.post("/createUser", async function (req, res) {
     res.redirect("/login");
   } catch (error) {
     console.error("Erreur lors de la création de l'utilisateur :", error);
-    res.status(500).send("Erreur lors de la création de l'utilisateur.");
+    res.status(500).json({error : "Erreur lors de la création de l'utilisateur."});
   }
 });
 

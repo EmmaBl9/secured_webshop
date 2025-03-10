@@ -20,19 +20,19 @@ const forbiddenChars = [
   "#",
   "`",
   "~",
-  "OR",
-  "AND",
-  "SELECT",
-  "INSERT",
-  "UPDATE",
-  "DELETE",
-  "DROP",
-  "CREATE",
-  "ALTER",
-  "TRUNCATE",
-  "EXEC",
-  "UNION",
-  "JOIN",
+  " OR ",
+  " AND ",
+  " SELECT ",
+  " INSERT ",
+  " UPDATE ",
+  " DELETE ",
+  " DROP ",
+  " CREATE ",
+  " ALTER ",
+  " TRUNCATE ",
+  " EXEC ",
+  " UNION ",
+  " JOIN ",
 ];
 
 const verifyEntry = (entry, res = null) => {
@@ -43,11 +43,13 @@ const verifyEntry = (entry, res = null) => {
   if (invalidChars.length > 0) {
     console.error("Entrée invalide détectée :", invalidChars.join(", "));
     if (res) {
-      return res.status(400).json({
-        error: `Une entrée contient des caractères interdits. Caractères interdits détectés : ${invalidChars.join(
+      const message = `Une entrée contient des caractères interdits. Caractères interdits détectés : ${invalidChars.join(
           ", "
-        )}`,
+        )}`
+      res.status(400).json({
+        error: message,
       });
+      return message;
     } else {
       return `Une entrée contient des caractères interdits. Caractères interdits détectés : ${invalidChars.join(
         ", "
@@ -57,4 +59,4 @@ const verifyEntry = (entry, res = null) => {
   return null;
 };
 
-export { verifyEntry, forbiddenChars };
+module.exports = {verifyEntry, forbiddenChars };

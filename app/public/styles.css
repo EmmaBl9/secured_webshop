@@ -55,7 +55,6 @@ h2::after {
   margin: 10px auto 0;
 }
 
-/* Form Styles */
 form {
   width: 100%;
 }
@@ -108,7 +107,6 @@ button:hover,
   transform: translateY(-2px);
 }
 
-/* Links */
 p {
   text-align: center;
   margin-top: 1.5rem;
@@ -127,7 +125,6 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Table Styles */
 .user-table {
   width: 100%;
   border-collapse: collapse;
@@ -158,7 +155,6 @@ a:hover {
   background-color: rgba(237, 40, 237, 0.1);
 }
 
-/* Clickable row styles */
 .clickable-row {
   cursor: pointer;
 }
@@ -170,7 +166,6 @@ a:hover {
   margin-top: 0.75rem;
 }
 
-/* Admin specific styles */
 #searchInput {
   margin-bottom: 1.5rem;
   padding-left: 2.5rem;
@@ -179,7 +174,6 @@ a:hover {
   background-position: 0.75rem center;
 }
 
-/* Account page */
 .admin-btn {
   background-color: var(--dark-light);
   color: var(--fuchsia-light);
@@ -200,7 +194,6 @@ a:hover {
   background-color: rgba(255, 0, 0, 0.9);
 }
 
-/* Responsive design */
 @media (max-width: 700px) {
   .container {
     padding: 1.5rem;
